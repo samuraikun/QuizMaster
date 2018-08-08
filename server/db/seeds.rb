@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Question.delete_all
+Question.create!([
+  {title: 'Question1', content: 'Who did you create Ruby language?', answer: 'Matz'},
+  {title: 'Question2', content: 'Who did you create Python language?', answer: 'Guido Van Rossum'}
+                 ])
