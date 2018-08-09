@@ -2,6 +2,8 @@
 
 module Api
   class QuestionsController < ApplicationController
+    before_action :set_question, only: %i(show update destroy)
+
     def index
       @questions = Question.all
 
@@ -9,17 +11,39 @@ module Api
     end
 
     def show
-      @question = Question.find(params[:id])
+      render json: @question, status: :ok
+    end
 
-      render json: @question
+    def create
+      @question = Question.new(question_params)
+
+      if @question.save
+        render json: @question, status: :created
+      else
+        render json: @question.errors, status: :bad_request
+      end
     end
 
     def update
-      Question.find_by(params).update!(params)
+      if @question.update(question_params)
+        render json: @question, status: :ok
+      else
+        render json: @question.errors, status: :bad_request
+      end
     end
 
     def destroy
-      Question.find_by(params).destroy!
+      @question.destroy!
+    end
+
+    private
+
+    def set_question
+      @question = Question.find(params[:id])
+    end
+
+    def question_params
+      params.permit(:title, :content, :answer)
     end
   end
 end
