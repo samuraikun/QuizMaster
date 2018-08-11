@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import Question from './Question';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  }
+});
 
 class QuestionList extends Component {
   constructor(props) {
@@ -20,18 +29,28 @@ class QuestionList extends Component {
   renderQuestions(questions) {
     return questions.map(question => {
       return (
-        <Question key={question.id} question={question} />
+        <Grid item xs={12} key={question.id}>
+          <Question question={question} />
+        </Grid>
       );
     });
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <ul>
-        {this.renderQuestions(this.state.questions)}
-      </ul>
+      <div className={classes.root}>
+        <Grid container spacing={24}>
+          {this.renderQuestions(this.state.questions)}
+        </Grid>
+      </div>
     );
   }
 }
 
-export default QuestionList;
+QuestionList.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(QuestionList);
