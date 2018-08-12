@@ -10,6 +10,10 @@ module Api
       render json: @questions
     end
 
+    def answer
+
+    end
+
     def show
       render json: @question, status: :ok
     end
