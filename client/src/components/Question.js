@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -9,6 +10,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
+import Answer from './Answer';
 
 const styles = theme => ({
   card: {
@@ -28,9 +30,7 @@ const styles = theme => ({
 class Question extends Component {
   constructor(props) {
     super(props);
-
-    this.state = { answer: '' }
-
+    this.state = { answer: '', result: null, correct_value: '' }
     this.handleChange = this.handleChange.bind(this);
     this.submitAnswer = this.submitAnswer.bind(this);
   }
@@ -39,8 +39,18 @@ class Question extends Component {
     this.setState({ answer: event.target.value });
   }
 
-  submitAnswer() {
-    console.log(this.state.answer);
+  async submitAnswer() {
+    try {
+      const response = await axios.get(`/api/questions/${this.props.question.id}/answer`, {
+        params: {
+          answer: this.state.answer
+        }
+      });
+
+      this.setState({ result: response.data.result, correct_value: response.data.value} );
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   render() {
@@ -48,25 +58,26 @@ class Question extends Component {
 
     return (
       <div>
-      <Card className={classes.card}>
-        <CardContent>
-          <Typography className={classes.title} color="textSecondary">
-            {this.props.question.title}
-          </Typography>
-          <Typography variant="headline" component="h2">
-            {this.props.question.content}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="answer">Answer</InputLabel>
-            <Input id="answer" onChange={this.handleChange} />
-            <Button variant="contained" color="primary" className={classes.button} onClick={this.submitAnswer}>
-              Submit
-            </Button>
-          </FormControl>
-        </CardActions>
-      </Card>
+        <Card className={classes.card}>
+          <CardContent>
+            <Typography className={classes.title} color="textSecondary">
+              {this.props.question.title}
+            </Typography>
+            <Typography variant="headline" component="h2">
+              {this.props.question.content}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="answer">Answer</InputLabel>
+              <Input id="answer" onChange={this.handleChange} />
+              <Button variant="contained" color="primary" className={classes.button} onClick={this.submitAnswer}>
+                Submit
+              </Button>
+            </FormControl>
+            <Answer result={this.state.result} correct_value={this.state.correct_value} />
+          </CardActions>
+        </Card>
       </div>
     );
   }
