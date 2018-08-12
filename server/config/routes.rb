@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   namespace :api do
     resources :questions do
-      collection do
-        post 'answer'
+      member do
+        get :answer
       end
     end
   end

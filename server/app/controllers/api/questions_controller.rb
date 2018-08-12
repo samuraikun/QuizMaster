@@ -2,7 +2,7 @@
 
 module Api
   class QuestionsController < ApplicationController
-    before_action :set_question, only: %i(show update destroy)
+    before_action :set_question, only: %i(show update destroy answer)
 
     def index
       @questions = Question.all
@@ -10,12 +10,14 @@ module Api
       render json: @questions
     end
 
-    def answer
-
-    end
-
     def show
       render json: @question, status: :ok
+    end
+
+    def answer
+      result = @question.check_answer(answer_params[:answer])
+
+      render json: result
     end
 
     def create
@@ -43,11 +45,15 @@ module Api
     private
 
     def set_question
-      @question = Question.find(params[:id])
+      @question = Question.find_by(id: params[:id])
     end
 
     def question_params
       params.permit(:title, :content, :answer)
+    end
+
+    def answer_params
+      params.permit(:answer)
     end
   end
 end

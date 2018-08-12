@@ -33,6 +33,21 @@ RSpec.describe 'Questions', type: :request do
     end
   end
 
+  describe 'GET /api/questions/:id/answer' do
+    let(:question) { create(:question) }
+    let(:params) { { answer: question.answer } }
+    let(:result) { { result: true, value: question.answer }.to_json }
+
+    subject { get "/api/questions/#{question.id}/answer", params: params }
+
+    specify do
+      subject
+
+      expect(response.status).to eq(200)
+      expect(response.body).to eq(result)
+    end
+  end
+
   describe 'POST /api/questions' do
     subject { post '/api/questions', params: params }
 
@@ -81,7 +96,9 @@ RSpec.describe 'Questions', type: :request do
     subject { delete "/api/questions/#{question.id}" }
 
     specify do
-      expect(Question.count).to eq(0)
+      subject
+
+      expect(Question.find_by(id: question.id)).to eq(nil)
     end
   end
 end
