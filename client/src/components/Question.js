@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -24,6 +25,9 @@ const styles = theme => ({
     display: 'inline-block',
     margin: theme.spacing.unit,
     position: 'center',
+  },
+  button: {
+    margin: theme.spacing.unit,
   },
 });
 
@@ -76,6 +80,9 @@ class Question extends Component {
               </Button>
             </FormControl>
             <Answer result={this.state.result} correct_value={this.state.correct_value} />
+            <Typography variant="subheading">
+              Edit Question
+            </Typography>
           </CardActions>
         </Card>
       </div>
