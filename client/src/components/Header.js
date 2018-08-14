@@ -12,6 +12,9 @@ const styles = {
   root: {
     flexGrow: 1,
   },
+  margin: {
+    marginRight: 20
+  },
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
@@ -42,8 +45,11 @@ class Header extends Component {
             <Typography className={classes.flex} variant="title" color="inherit">
               <Link to="/" className={classes.link}>Quiz Master</Link>
             </Typography>
+            <Typography className={classes.margin} variant="subheading" color="inherit">
+              <Link to="/question/new" className={classes.link}>Add New Question</Link>
+            </Typography>
             <Typography variant="subheading" color="inherit">
-              <Link to="/questions/new" className={classes.link}>Add Question</Link>
+              <Link to="/questions/index" className={classes.link}>Manage Questions</Link>
             </Typography>
           </Toolbar>
         </AppBar>
