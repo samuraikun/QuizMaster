@@ -9,5 +9,6 @@
 Question.delete_all
 Question.create!([
   {title: 'Question1', content: 'Who did you create Ruby language?', answer: 'Matz'},
-  {title: 'Question2', content: 'Who did you create Python language?', answer: 'Guido Van Rossum'}
+  {title: 'Question2', content: 'Who did you create Python language?', answer: 'Guido Van Rossum'},
+  {title: 'Question3', content: 'When was the year finished World at War Ⅱ ?', answer: '1945'}
                  ])
