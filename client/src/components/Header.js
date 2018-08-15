@@ -49,7 +49,7 @@ class Header extends Component {
               <Link to="/question/new" className={classes.link}>Add New Question</Link>
             </Typography>
             <Typography variant="subheading" color="inherit">
-              <Link to="/questions/index" className={classes.link}>Manage Questions</Link>
+              <Link to="/questions" className={classes.link}>Manage Questions</Link>
             </Typography>
           </Toolbar>
         </AppBar>

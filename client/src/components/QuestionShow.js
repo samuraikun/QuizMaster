@@ -12,6 +12,9 @@ const styles = theme => ({
   formControl: {
     margin: theme.spacing.unit,
   },
+  button: {
+    margin: 20
+  }
 });
 
 class QuestionShow extends Component {
@@ -25,6 +28,7 @@ class QuestionShow extends Component {
       open: false,
       vertical: 'top',
       horizontal: 'center',
+      message: ''
     }
   }
 
@@ -43,24 +47,26 @@ class QuestionShow extends Component {
       answer: this.state.answer,
     }
 
-    const response = await axios.put('/api/questions', params);
+    try {
+      await axios.put(`/api/questions/${this.props.match.params.id}`, params);
 
-    if (response.status === 201) {
-      console.log(response);
-
-      this.setState({ open: true });
-    } else {
-      console.log(response);
+      this.setState({ open: true, message: 'Update!' });
+    } catch (error) {
+      console.log(error);
     }
   }
 
   deleteQuestion = async () => {
-    const response = await axios.delete(`/api/questions/${this.props.question.id}`);
+    try {
+      await axios.delete(`/api/questions/${this.props.match.params.id}`);
 
-    console.log(response);
+      this.setState({ open: true, message: 'Delete!' });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  renderQuestionForm() {
+  render() {
     const { classes } = this.props;
     const { vertical, horizontal, open } = this.state;
 
@@ -85,10 +91,10 @@ class QuestionShow extends Component {
           </FormControl>
         </div>
         <div className='add-question'>
-          <Button variant="contained" color="primary" onClick={this.updateQuestion}>
+          <Button className={classes.button} variant="contained" color="primary" onClick={this.updateQuestion}>
             Update
           </Button>
-          <Button variant="contained" color="primary" onClick={this.deleteQuestion}>
+          <Button className={classes.button} variant="contained" color="secondary" onClick={this.deleteQuestion}>
             Delete
           </Button>
         </div>
@@ -100,15 +106,9 @@ class QuestionShow extends Component {
           ContentProps={{
             'aria-describedby': 'message-id',
           }}
-          message={<span id="message-id">Created!</span>}
+          message={<span id="message-id">{this.state.message}</span>}
         />
       </div>
-    );
-  }
-
-  render() {
-    return (
-      <p>{this.props}</p>
     );
   }
 }

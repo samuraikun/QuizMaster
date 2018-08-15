@@ -24,7 +24,6 @@ const styles = theme => ({
   formControl: {
     display: 'inline-block',
     margin: theme.spacing.unit,
-    position: 'center',
   },
   button: {
     margin: theme.spacing.unit,
@@ -80,9 +79,6 @@ class Question extends Component {
               </Button>
             </FormControl>
             <Answer result={this.state.result} correct_value={this.state.correct_value} />
-            <Typography variant="subheading">
-              Edit Question
-            </Typography>
           </CardActions>
         </Card>
       </div>
