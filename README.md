@@ -7,7 +7,8 @@
 ## Server
 - Ruby 2.5.1
 - Rails 5.2.1
-- Postgresql 10.4
+- SQLite(only dev & test envrionment)
+- Postgresql 10.4(only production)
 
 ### Run
 
