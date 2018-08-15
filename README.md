@@ -32,3 +32,7 @@ npm install
 
 npm run start
 ```
+
+## WIP
+- [ ] Frontend Test
+- [ ] Improve Style
