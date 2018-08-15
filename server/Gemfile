@@ -35,6 +35,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-doc'
   gem 'awesome_print'
+  gem 'sqlite3'
 end
 
 group :development do
